@@ -1,0 +1,45 @@
+<p>
+  committee-create works!
+</p>
+
+<div class="col-md-6">
+  <form [ngFormModel]="form" (ngSubmit)="addMember()">
+    <fieldset>
+      <legend>Manage Committee</legend>
+
+      <div class="form-group">
+        <label for="committeeYear">Committee year</label>
+        <input type="text" class="form-control" id="committeeYear" 
+          [(ngModel)]="committeeYear" #year="ngForm" ngControl="committeeYear" (change)="onYearChange()">
+        <div *ngIf="year.touched && !year.valid" class="alert alert-danger">
+           Committee year is required
+        </div>
+      </div>
+
+    </fieldset>
+
+    <ul>
+      <li *ngFor="let member of committeeMembers | async">
+        {{member.name}}
+      </li>
+    </ul>
+    <p>{{committee | async |json}}</p>
+
+
+    <fieldset ngControlGroup="newMember">
+      <legend>Add member</legend>
+      <div class="form-group">
+        <label for="name">name</label>
+        <input type="text" class="form-control" id="name" 
+          [(ngModel)]="newMember.name" #name="ngForm" ngControl="name">
+        <div *ngIf="name.touched && !name.valid" class="alert alert-danger">
+           name is required
+        </div>
+      </div>
+
+    </fieldset>
+    <button [disabled]="!form.valid" type="submit" class="btn btn-primary"> 
+      Add
+    </button>
+  </form>
+</div>

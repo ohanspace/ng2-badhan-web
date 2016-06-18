@@ -1,0 +1,8 @@
+<p>
+  organogram works!
+</p>
+
+<p>{{ (organogram | async)?.name}} </p>
+<li> 
+  <a [routerLink]="['/committees/manage',(organogram | async)?.id ]"> create committee</a>
+</li>
