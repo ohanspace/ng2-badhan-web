@@ -21,6 +21,11 @@ module.exports = function(defaults) {
 
 
     ]
+    // lessCompiler: {
+    //   includePaths: [
+    //     'src/'
+    //   ],
+    // }
     
   });
 };

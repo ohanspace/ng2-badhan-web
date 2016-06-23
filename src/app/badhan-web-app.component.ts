@@ -8,12 +8,16 @@ import { OrganogramsComponent } from './+organograms';
 import { AuthComponent } from './auth';
 import { MembersComponent } from './+members';
 import { CommitteesComponent } from './+committees';
-
+import { SettingsComponent } from './+settings';
 
 @Routes([
   {
     path: '/',
     component: HomeComponent
+  },
+  {
+    path: '/settings',
+    component: SettingsComponent
   },
   {
     path: '/organograms',
@@ -33,9 +37,10 @@ import { CommitteesComponent } from './+committees';
   }
 ])
 @Component({
+  moduleId: module.id,
   selector: 'badhan-web-app',
-  templateUrl: 'app/badhan-web-app.component.html',
-  directives: [ROUTER_DIRECTIVES, HeaderComponent, FooterComponent]
+  templateUrl: 'badhan-web-app.component.html',
+  directives: [ROUTER_DIRECTIVES, HeaderComponent, FooterComponent],
 })
 export class BadhanWebAppComponent {
   

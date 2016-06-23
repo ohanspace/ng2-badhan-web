@@ -14,6 +14,10 @@ export class AuthService {
     });    
   }
 
+  getAuth$(){
+    return this.authState;
+  }
+
   get expired(): boolean {
     return !this.authState || (this.authState.expires * 1000) < Date.now();
   }

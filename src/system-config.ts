@@ -53,18 +53,20 @@ const barrels: string[] = [
   'app/shared/footer',
   'app/+organograms',
   'app/+organograms/organogram-list',
-  'app/+organograms/organogram',
-  'app/+organograms/organogram-form',  
+  'app/+organograms/organogram-item',
+  'app/+organograms/organogram-create-form',  
   'app/auth',
   'app/auth/login',
   'app/+members',
   'app/+members/member-list',
-  'app/+members/member',
+  'app/+members/member-item',
+  'app/+members/member-create-form',
   'app/+committees',
   'app/+committees/committee',
   'app/+committees/committee-create',
-  'app/+members/member-item',
-  'app/+members/member-create-form',
+  
+  'app/+settings',
+  'app/+settings/profile',
   /** @cli-barrel */
 ];
 

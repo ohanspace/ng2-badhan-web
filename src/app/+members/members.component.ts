@@ -10,6 +10,9 @@ import { MemberCreateFormComponent } from './member-create-form';
   directives: [ MemberListComponent, MemberCreateFormComponent], 
   providers: [MemberService], 
   template: `
+    <select [(ngModel)]="selectedOrganogram" (ngModelChange)="onOrganogramChange()">
+      <option [ngValue]="organogram" *ngFor="let organogram of organograms">{{organogram.name}}</option>
+    </select>
     <div class="row">
       <div class="col-md-6">
         <member-create-form (createMember) = "memberService.createMember($event)"></member-create-form>
@@ -25,10 +28,16 @@ import { MemberCreateFormComponent } from './member-create-form';
   `,
 })
 export class MembersComponent implements OnInit {
+  selectedOrganogram: any;
+  organograms: any[] = [{name: 'a'}, {name:'b'}];
 
   constructor(private memberService: MemberService) {}
 
   ngOnInit() {
+  }
+
+  onOrganogramChange(){
+    console.log(this.selectedOrganogram);
   }
 
 }

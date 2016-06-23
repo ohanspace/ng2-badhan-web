@@ -1,33 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ROUTER_DIRECTIVES } from '@angular/router';
 import { FirebaseListObservable } from 'angularfire2';
 
-import { OrganogramService } from '../shared/index';
+import { IOrganogram } from '../shared/organogram.model';
+import { OrganogramItemComponent } from '../organogram-item';
+
 
 @Component({
   moduleId: module.id,
-  selector: 'badhan-organogram-list',
-  templateUrl: 'organogram-list.component.html',
-  directives: [ROUTER_DIRECTIVES],
-  providers: [OrganogramService]
+  selector: 'organogram-list',
+  directives: [ROUTER_DIRECTIVES, OrganogramItemComponent],  
+  template: `
+    <div class="organogram-list">
+      <h3>Organogram List</h3>
+      <organogram-item
+        *ngFor="let organogram of organogramItems$ | async"
+        [organogram]="organogram"
+        (remove)="remove.emit(organogram)"
+        (update)="update.emit({organogram: organogram, changes: $event})"></organogram-item>
+    </div>
+
+  `,
 })
 export class OrganogramListComponent implements OnInit {
-  
-  organograms: FirebaseListObservable<any[]>;
-  
-  constructor(private organogramService: OrganogramService) {
-     
-  }
+  @Input() organogramItems$: FirebaseListObservable<IOrganogram[]>;
+  @Output() remove: EventEmitter<IOrganogram> = new EventEmitter(false);
+  @Output() update: EventEmitter<any> = new EventEmitter(false);  
+
+  constructor() {}
 
   ngOnInit() {
-   this.organograms = this.organogramService.getAllOrganograms(); 
-  }
-
-  delete($key){
-    if(confirm("ary you sure delete this??")){
-      this.organograms.remove($key);
-    }
-    
   }
 
 }

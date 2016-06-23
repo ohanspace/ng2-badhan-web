@@ -1,40 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, Routes, ROUTER_DIRECTIVES } from '@angular/router';
 
 import { OrganogramListComponent } from './organogram-list';
-import { OrganogramComponent } from './organogram';
-import { OrganogramFormComponent } from './organogram-form';
+import { OrganogramService } from './shared/organogram.service';
+import { OrganogramCreateFormComponent } from './organogram-create-form';
 
-@Routes([
-  {
-    path: '/',
-    component: OrganogramListComponent
-  },
-  {
-    path: '/new',
-    component: OrganogramFormComponent 
-  },
-  {
-    path: '/edit/:id',
-    component: OrganogramFormComponent 
-  },
-  {
-    path: '/:id',
-    component: OrganogramComponent
-  }
-
-])
 @Component({
   moduleId: module.id,
   selector: 'badhan-organograms',
-  templateUrl: 'organograms.component.html',
-  directives: [ROUTER_DIRECTIVES]
+  directives: [ OrganogramListComponent, OrganogramCreateFormComponent], 
+  providers: [OrganogramService], 
+  template: `
+    <div class="row">
+      <div class="col-md-6">
+        <organogram-create-form (createOrganogram) = "organogramService.createOrganogram($event)"></organogram-create-form>
+      </div>
+
+      <div class="col-md-6">
+        <organogram-list 
+          [organogramItems$]="organogramService.organogramItems$"
+          (remove)="organogramService.removeOrganogram($event)"
+          (update)="organogramService.updateOrganogram($event.task, $event.changes)"></organogram-list>
+      </div>
+    </div>
+  `,
 })
 export class OrganogramsComponent implements OnInit {
 
-  constructor(private router: Router) {}
+  constructor(private organogramService: OrganogramService) {}
 
   ngOnInit() {
   }
+
+
 
 }

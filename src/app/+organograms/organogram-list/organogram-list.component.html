@@ -1,8 +1,0 @@
-<p>
-  organogram-list works! <a [routerLink] = "['/organograms/new']" >create new</a>
-</p>
-<ul>
-  <li *ngFor='let organogram of organograms | async'>{{organogram.id}} -- {{organogram.name}} 
-    | <a (click)="delete(organogram.$key)">remove</a>
-    | <a [routerLink] = "['/organograms',organogram.$key]">view</a></li>
-</ul>

@@ -1,38 +1,35 @@
-import { Injectable, Inject } from '@angular/core';
-import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2'; 
+import 'rxjs/add/operator/map';
+import { Injectable } from '@angular/core';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 
+import { IOrganogram } from './organogram.model';
 
 
 @Injectable()
 export class OrganogramService {
-  public organogramsUri = '/organograms';
+  organogramItems$: FirebaseListObservable<IOrganogram[]>;
 
-
-  constructor( private angularFire: AngularFire) {
-    // this.organogramsRef = firebase.database().ref('/organograms');
-    
+  constructor(private af: AngularFire) {
+    this.organogramItems$ = this.af.database.list(`/organograms`) as FirebaseListObservable<IOrganogram[]>;
   }
 
-  getNew(){
-    return {
-      id: '',
-      name: ''
-    }
+  createOrganogram(organogram : IOrganogram): Promise<any> {
+    console.log('firebase record creating...');
+    return this.af.database
+                  .object('/organograms/' + organogram.uniqueId)
+                  .set(organogram)
+    //return this.organogramItems$.push(new Organogram(organogram.uniqueId, organogram.name));
   }
 
-  createOrganogram(organogram: any){
-      //console.log(organogram);
-      var organogramNode: FirebaseObjectObservable<any[]>;      
-      organogramNode = this.angularFire.database.object('/organograms/'+organogram.id);
-      return organogramNode.set(organogram);
+  removeOrganogram(organogram: IOrganogram): Promise<any> {
+    return this.organogramItems$.remove(organogram.$key);
   }
 
-  getAllOrganograms(){
-    return this.angularFire.database.list('/organograms');
+  updateOrganogram(organogram: IOrganogram, changes: any): Promise<any> {
+    return this.organogramItems$.update(organogram.$key, changes);
   }
 
-  getOrganogram(id){
-    return this.angularFire.database.object('/organograms/' +id);
+  getOrganogramItems(): FirebaseListObservable<IOrganogram[]>{
+    return this.organogramItems$;
   }
-
 }
